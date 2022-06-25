@@ -1,0 +1,20 @@
+_extends: .github
+
+repository:
+  name: minikube
+  description: My home minikube cluster confguration.
+  homepage: https://github.com/bjd2385/minikube
+  private: false
+
+branches:
+  - name: master
+    protection:
+      required_status_checks:
+        strict: true
+        contexts:
+          - on-commit
+
+      restrictions:
+        users: []
+        apps: []
+        teams: []
