@@ -1,0 +1,16 @@
+argo-cd:
+  # https://artifacthub.io/packages/helm/argo/argo-cd
+  redis-ha:
+    enabled: true
+
+  controller:
+    enableStatefulSet: true
+
+  server:
+    replicas: 2
+    env:
+      - name: ARGOCD_API_SERVER_REPLICAS
+        value: '2'
+
+  repoServer:
+    replicas: 2

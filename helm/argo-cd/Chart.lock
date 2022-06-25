@@ -1,0 +1,6 @@
+dependencies:
+- name: argo-cd
+  repository: https://argoproj.github.io/argo-helm
+  version: 4.9.7
+digest: sha256:b8babac60f2141faa43b9bd61f4d2acce8e99e9057a275b8f39eec315c08ffe7
+generated: "2022-06-25T17:41:53.873811869-04:00"
