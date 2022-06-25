@@ -1,0 +1,17 @@
+redis:
+  kubeVersion: 1.24.1
+  architecture: replication
+
+  master: {}
+
+  replica:
+    replicaCount: 2
+
+    containerPorts:
+      redis: 6379
+
+  volumePermissions:
+    enabled: true
+
+  metrics:
+    enabled: false
