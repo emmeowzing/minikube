@@ -24,18 +24,39 @@ minikube start --interactive=false \
                --disable-metrics=false \
                --wait-timeout=3m0s \
 minikube addons enable metrics-server
+printf "\\n"
 minikube status
-
-printf "\\nMigrating kvm disks to ZFS mountpoint.\\n\\n"
+printf "Migrating kvm disks to ZFS mountpoint.\\n\\n"
 
 # Due to a bug that was not fixed (not sure if it will ever be), I need a hacky work-around for migrating minikube virtual disks
 # from the minikube home directory to my ZFS array.
-./stop.sh
-sudo mv "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube* "$ZFS_MOUNTPOINT"
+./scripts/stop.sh
+sudo cp -R "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube* "$ZFS_MOUNTPOINT"
+sudo rm "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube*/*.iso
+sudo rm "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube*/*.rawdisk
 
 mapfile -t VMs < <(virsh list --all --name | grep -i minikube)
 
 for VM in "${VMs[@]}"; do
     printf "Updating devices for %s.\\n" "$VM"
-    virsh dumpxml --security-info "$VM" > ".${VM}.xml"    
+    tmp_VM=".${VM}.xml"
+    virsh dumpxml --security-info "$VM" > "$tmp_VM"
+    virsh undefine "$VM"
+
+    # Format XML with xmlstartlet.
+    xmlstarlet fo "$tmp_VM" > "${tmp_VM}.tmp"
+    mv "${tmp_VM}.tmp" "$tmp_VM"
+
+    # Update ISO path.
+    iso_file="$(basename "$(grep -oP "(?<=file=\").*iso" "$tmp_VM")")"
+    xmlstarlet edit --inplace --update "/domain/devices/disk[@type='file' and @device='cdrom']/source/@file" --value "${ZFS_MOUNTPOINT}/${VM}/${iso_file}" "$tmp_VM"
+
+    # Update raw disk path.
+    raw_disk_file="$(basename "$(grep -oP "(?<=file=\").*rawdisk" "$tmp_VM")")"
+    xmlstarlet edit --inplace --update "/domain/devices/disk[@type='file' and @device='disk']/source/@file" --value "${ZFS_MOUNTPOINT}/${VM}/${raw_disk_file}" "$tmp_VM"
+
+    virsh define "$tmp_VM"
+    rm "${tmp_VM:?}"
 done
+
+./scripts/start.sh

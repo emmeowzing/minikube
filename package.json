@@ -10,9 +10,11 @@
   "scripts": {
     "cluster:start": "./scripts/start.sh",
     "cluster:start:new": "./scripts/start-new.sh",
+    "clsuter:create": "yarn cluster:start:new",
     "cluster:delete": "./scripts/delete.sh",
     "cluster:stop": "./scripts/stop.sh",
     "cluster:node:add": "./scripts/add-node.sh",
-    "cluster:node:delete": "./scripts/delete-node.sh"
+    "cluster:node:delete": "./scripts/delete-node.sh",
+    "cluster:status": "minikube status"
   }
 }
