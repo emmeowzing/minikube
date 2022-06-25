@@ -15,6 +15,7 @@
     "cluster:stop": "./scripts/stop.sh",
     "cluster:node:add": "./scripts/add-node.sh",
     "cluster:node:delete": "./scripts/delete-node.sh",
-    "cluster:status": "minikube status"
+    "status": "minikube status",
+    "tunnel": "minikube tunnel"
   }
 }
