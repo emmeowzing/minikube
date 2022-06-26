@@ -15,6 +15,12 @@ $ yarn cluster:create
 This command can take several minutes to complete.
 
 ```shell
+$ virsh list
+ Id    Name                           State
+----------------------------------------------------
+ 51    minikube                       running
+ 52    minikube-m02                   running
+ 53    minikube-m03                   running
 
 ```
 
