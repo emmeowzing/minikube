@@ -1,0 +1,12 @@
+version: 2.1
+
+orbs:
+  dynamic: bjd2385/dynamic-continuation@3.1.1
+
+workflows:
+  on-commit:
+    jobs:
+      - dynamic/continue:
+          context: orb-publishing
+          modules: |
+            helm
