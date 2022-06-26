@@ -1,4 +1,4 @@
-## My home Minikube cluster configs
+## Home Minikube cluster configs
 
 This repo contains some development / learning work I've done to deploy several applications on my home network.
 
@@ -12,7 +12,9 @@ You can create a Minikube cluster in KVM on your ZFS array by running
 $ yarn cluster:create
 ```
 
-Update the `ZFS_MOUNTPOINT` environment variable in `[scripts/start-new.sh](scripts/start-new.sh) to your target dataset's mountpoint.
+This command can take several minutes to complete.
+
+Update the `ZFS_MOUNTPOINT` environment variable in [scripts/start-new.sh](scripts/start-new.sh) to your target dataset's mountpoint. I've defaulted it to a location on my array.
 
 #### Delete
 
