@@ -44,7 +44,7 @@ for VM in "${VMs[@]}"; do
     virsh dumpxml --security-info "$VM" > "$tmp_VM"
     virsh undefine "$VM"
 
-    # Format XML with xmlstartlet.
+    # Format XML with xmlstarlet.
     xmlstarlet fo "$tmp_VM" > "${tmp_VM}.tmp"
     mv "${tmp_VM}.tmp" "$tmp_VM"
 

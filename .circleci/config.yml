@@ -10,3 +10,4 @@ workflows:
           context: orb-publishing
           modules: |
             helm
+            scripts
