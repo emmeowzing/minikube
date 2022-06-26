@@ -33,8 +33,7 @@ printf "Migrating kvm disks to ZFS mountpoint.\\n\\n"
 # from the minikube home directory to my ZFS array.
 ./scripts/stop.sh
 
-sudo mv "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube*/*.iso "$ZFS_MOUNTPOINT"
-sudo mv "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube*/*.rawdisk "$ZFS_MOUNTPOINT"
+sudo cp -R "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube* "$ZFS_MOUNTPOINT"
 sudo rm "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube*/*.iso
 sudo rm "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube*/*.rawdisk
 
