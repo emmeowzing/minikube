@@ -1,0 +1,14 @@
+chart-dirs:
+  - helm
+excluded-charts: []
+check-version-increment: true
+lint-conf: .helm-lint.yaml
+target-branch: master
+remote: origin
+validate-maintainers: false
+exclude-deprecated: true
+
+# YAML and chart validation.
+validate-chart-schema: true
+chart-yaml-schema: .helm-chart-schema.yaml
+validate-yaml: true
