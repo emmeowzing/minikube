@@ -24,6 +24,7 @@ minikube start --interactive=false \
                --disable-metrics=false \
                --wait-timeout=3m0s \
 minikube addons enable metrics-server
+minikube addons enable ingress
 printf "\\n"
 minikube status
 printf "Migrating kvm disks to ZFS mountpoint.\\n\\n"
