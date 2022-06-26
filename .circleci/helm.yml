@@ -3,4 +3,8 @@ version: 2.1
 orbs:
   helm: hqo/chart-testing@1.0.3
 
+commands: {}
+
+jobs: {}
+
 workflows: {}

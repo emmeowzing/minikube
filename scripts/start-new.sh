@@ -1,6 +1,8 @@
 #! /bin/bash
 # Start my minikube cluster.
 
+# shellcheck disable=SC2215
+
 if ! hash xmlstarlet 2>/dev/null; then
     _error "Must install xmlstarlet dependency for inline XML updates to virsh templates."
 fi
@@ -20,11 +22,13 @@ minikube start --interactive=false \
                --dns-domain=cluster.local \
                --service-cluster-ip-range='10.96.0.0/16' \
                --nat-nic-type=virtio \
+               --network-plugin=cni \
+               --extra-config=kubelet.network-plugin=cni
                --namespace=default \
                --disable-metrics=false \
                --wait-timeout=3m0s \
-minikube addons enable metrics-server
-minikube addons enable ingress
+
+minikube addons enable metrics-server ingress
 printf "\\n"
 minikube status
 printf "Migrating kvm disks to ZFS mountpoint.\\n\\n"
