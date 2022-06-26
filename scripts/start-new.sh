@@ -23,12 +23,16 @@ minikube start --interactive=false \
                --service-cluster-ip-range='10.96.0.0/16' \
                --nat-nic-type=virtio \
                --network-plugin=cni \
-               --extra-config=kubelet.network-plugin=cni
                --namespace=default \
                --disable-metrics=false \
                --wait-timeout=3m0s \
 
-minikube addons enable metrics-server ingress
+# Install Cilium https://docs.cilium.io/en/v1.9/gettingstarted/minikube/
+minikube ssh -- sudo mount bpffs -t bpf /sys/fs/bpf
+kubectl create -f https://raw.githubusercontent.com/cilium/cilium/v1.9/install/kubernetes/quick-install.yaml
+
+minikube addons enable ingress
+minikube addons enable metrics-server
 printf "\\n"
 minikube status
 printf "Migrating kvm disks to ZFS mountpoint.\\n\\n"

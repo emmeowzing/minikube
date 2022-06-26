@@ -14,7 +14,11 @@ $ yarn cluster:create
 
 This command can take several minutes to complete.
 
-Update the `ZFS_MOUNTPOINT` environment variable in [scripts/start-new.sh](scripts/start-new.sh) to your target dataset's mountpoint. I've defaulted it to a location on my array.
+```shell
+
+```
+
+Update the `ZFS_MOUNTPOINT` environment variable in [scripts/start-new.sh](scripts/start-new.sh) to your target dataset's mountpoint. I've defaulted it to a particular data set on my array.
 
 #### Delete
 
@@ -23,3 +27,5 @@ Delete your Minikube cluster with
 ```shell
 $ yarn cluster:delete
 ```
+
+This deletes your cluster in Minikube's configs, removes vdisks from the ZFS mountpoint, and undefines any residual VMs prefixed with `minikube`.
