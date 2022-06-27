@@ -1,6 +1,8 @@
 #! /bin/bash
 # Start my minikube cluster.
 
+# shellcheck disable=SC2215
+
 if ! hash xmlstarlet 2>/dev/null; then
     _error "Must install xmlstarlet dependency for inline XML updates to virsh templates."
 fi
@@ -20,11 +22,17 @@ minikube start --interactive=false \
                --dns-domain=cluster.local \
                --service-cluster-ip-range='10.96.0.0/16' \
                --nat-nic-type=virtio \
+               --network-plugin=cni \
                --namespace=default \
                --disable-metrics=false \
                --wait-timeout=3m0s \
-minikube addons enable metrics-server
+
+# Install Cilium https://docs.cilium.io/en/v1.9/gettingstarted/minikube/
+minikube ssh -- sudo mount bpffs -t bpf /sys/fs/bpf
+kubectl create -f https://raw.githubusercontent.com/cilium/cilium/v1.9/install/kubernetes/quick-install.yaml
+
 minikube addons enable ingress
+minikube addons enable metrics-server
 printf "\\n"
 minikube status
 printf "Migrating kvm disks to ZFS mountpoint.\\n\\n"
@@ -33,8 +41,7 @@ printf "Migrating kvm disks to ZFS mountpoint.\\n\\n"
 # from the minikube home directory to my ZFS array.
 ./scripts/stop.sh
 
-sudo mv "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube*/*.iso "$ZFS_MOUNTPOINT"
-sudo mv "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube*/*.rawdisk "$ZFS_MOUNTPOINT"
+sudo cp -R "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube* "$ZFS_MOUNTPOINT"
 sudo rm "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube*/*.iso
 sudo rm "${MINIKUBE_HOME:-$HOME/.minikube}"/machines/minikube*/*.rawdisk
 
