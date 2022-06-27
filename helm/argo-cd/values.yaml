@@ -11,6 +11,10 @@ argo-cd:
     env:
       - name: ARGOCD_API_SERVER_REPLICAS
         value: '2'
+    ingress:
+      enabled: true
 
   repoServer:
     replicas: 2
+
+  notifications: {}
