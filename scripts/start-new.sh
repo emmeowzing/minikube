@@ -7,7 +7,7 @@ if ! hash xmlstarlet 2>/dev/null; then
     _error "Must install xmlstarlet dependency for inline XML updates to virsh templates."
 fi
 
-export ZFS_MOUNTPOINT=/homePool/home/VMs/general
+export ZFS_MOUNTPOINT="${1:-/homePool/home/VMs/general}"
 
 minikube start --interactive=false \
                --kubernetes-version=1.24.1 \
