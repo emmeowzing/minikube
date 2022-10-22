@@ -9,7 +9,7 @@ if ! hash xmlstarlet 2>/dev/null; then
 fi
 
 if [ -d "$HOME"/.minikube/machines/minikube ]; then
-    _error "Must clean up existing cluster before proceeding to create a new one (minikube delete)"
+    _error "Must clean up existing cluster before proceeding to create a new one (yarn cluster:delete)"
     exit 1
 fi
 
@@ -37,7 +37,7 @@ minikube start --interactive=false \
 minikube ssh -- sudo mount bpffs -t bpf /sys/fs/bpf
 kubectl create -f https://raw.githubusercontent.com/cilium/cilium/v1.9/install/kubernetes/quick-install.yaml
 
-minikube addons enable ingress
+#minikube addons enable ingress
 minikube addons enable metrics-server
 printf "\\n"
 minikube status
