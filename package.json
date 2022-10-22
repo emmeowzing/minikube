@@ -8,13 +8,13 @@
   "license": "GPLv3",
   "private": true,
   "scripts": {
-    "cluster:start": "./scripts/start.sh",
-    "cluster:start:new": "./scripts/start-new.sh",
+    "cluster:start": "./scripts/minikube/start.sh",
+    "cluster:start:new": "./scripts/minikube/start-new.sh",
     "cluster:create": "yarn cluster:start:new",
-    "cluster:delete": "./scripts/delete.sh",
-    "cluster:stop": "./scripts/stop.sh",
-    "cluster:node:add": "./scripts/add-node.sh",
-    "cluster:node:delete": "./scripts/delete-node.sh",
+    "cluster:delete": "./scripts/minikube/delete.sh",
+    "cluster:stop": "./scripts/minikube/stop.sh",
+    "cluster:node:add": "./scripts/minikube/add-node.sh",
+    "cluster:node:delete": "./scripts/minikube/delete-node.sh",
     "status": "minikube status",
     "tunnel": "minikube tunnel"
   }

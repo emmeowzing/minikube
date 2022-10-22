@@ -1,0 +1,11 @@
+apiVersion: v2
+name: nginx
+description: A Helm chart for Nginx deployment on Kubernetes
+type: application
+version: 1.0.0
+
+dependencies:
+  - name: nginx-ingress
+    repository: https://helm.nginx.com/stable
+    version: 0.15.1
+    alias: nginx
