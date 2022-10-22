@@ -5,6 +5,12 @@
 
 if ! hash xmlstarlet 2>/dev/null; then
     _error "Must install xmlstarlet dependency for inline XML updates to virsh templates."
+    exit 1
+fi
+
+if [ -d "$HOME"/.minikube/machines/minikube ]; then
+    _error "Must clean up existing cluster before proceeding to create a new one (minikube delete)"
+    exit 1
 fi
 
 export ZFS_MOUNTPOINT="${1:-/home/VMs}"
